@@ -11,9 +11,10 @@ public class moveplayer : MonoBehaviour
     public float deccelerate;
     public float speed;
     public float turnSpeed;
+    public Vector2 boundaries;
 
 
-    private Vector2 velocity;
+    public Vector2 velocity;
     void Start () {
         tstop();
     }
@@ -49,11 +50,12 @@ public class moveplayer : MonoBehaviour
             velocity = Vector2.Lerp(velocity,Vector2.zero,deccelerate*Time.deltaTime);
         }
 
-        if (velocity.magnitude > 0.2) {
+        if (Input.GetKey(up)) {
             tstart();
         } else {
             tstop();
         }
         transform.position += (Vector3)velocity*Time.deltaTime;
+        transform.position = new Vector2(Mathf.Clamp(transform.position.x,-boundaries.x,boundaries.x),Mathf.Clamp(transform.position.y,-boundaries.y,boundaries.y));
     }
 }
